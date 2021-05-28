@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
-import got from 'got';
+// import got from 'got';
 
 @Injectable()
 export class WeatherService {
-  dev() {
+  dev(): string {
     return 'Hello Dev!!';
   }
 
   @Interval(5000)
   async devInterval(): Promise<void> {
     try {
-      const message = '5초단위로 실행(테스트)';
+      // const message = '5초단위로 실행(테스트)';
       // const args = {
       //   body: message,
       // };
@@ -25,7 +25,6 @@ export class WeatherService {
       //     body: JSON.stringify(args),
       //   },
       // );
-
       // if (response.statusCode !== 200) {
       //   const errorMessage = `error ${response.statusMessage}`;
       //   throw new Error(errorMessage);

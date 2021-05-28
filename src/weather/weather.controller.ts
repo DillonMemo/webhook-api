@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Header, Post, Req, Res } from '@nestjs/common';
-import { WeatherOutput } from './dto/weather.dto';
+import { Controller, Get } from '@nestjs/common';
 import { WeatherService } from './weather.service';
 
 @Controller('weather')
@@ -7,7 +6,7 @@ export class WeatherController {
   constructor(private readonly weatherService: WeatherService) {}
 
   @Get()
-  dev() {
+  dev(): string {
     return this.weatherService.dev();
   }
 
