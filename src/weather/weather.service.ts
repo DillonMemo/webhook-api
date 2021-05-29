@@ -5,7 +5,12 @@ import { Interval } from '@nestjs/schedule';
 @Injectable()
 export class WeatherService {
   dev(): string {
-    return 'Hello Dev!!';
+    return `Hello Dev!! ${process.env.NODE_ENV}
+      ${process.env.DB_HOST}
+      ${process.env.DB_PORT}
+      ${process.env.DB_USERNAME}
+      ${process.env.DB_PASSWORD}
+      ${process.env.DB_NAME}`;
   }
 
   @Interval(5000)
