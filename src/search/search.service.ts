@@ -16,8 +16,6 @@ export class SearchService {
 
   async getSearch({ data }: CoreInput): Promise<CoreOutput> {
     try {
-      console.log('postData:', data);
-
       if (data) {
         const outgoing_url = `https://openapi.naver.com/v1/search/blog?query=${data}`;
 
@@ -34,16 +32,16 @@ export class SearchService {
 
         const parserSearch: SearchDto = JSON.parse(searchResponse.body);
 
-        console.log('api', parserSearch);
-
         const args: IncomingOutput = {
           body: `**${data}** 검색 결과를 알려드림`,
-          connectColor: '#2478FF',
+          connectColor: '#86E57F',
           connectInfo: parserSearch.items.slice(0, 5).map(item => ({
             title: `[${removeTag(item.title)}](${item.link})`,
             description: removeTag(item.description),
           })),
         };
+
+        console.log('result', args);
 
         const incoming_url =
           'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
@@ -99,7 +97,7 @@ export class SearchService {
           body: `**${
             new Date().getMonth() + 1
           }월 ${new Date().getDate()}일 오늘 이슈 알려드림**`,
-          connectColor: '#2478FF',
+          connectColor: '#86E57F',
           connectInfo: parserNews.items.slice(0, 5).map(
             item =>
               item.originallink && {
