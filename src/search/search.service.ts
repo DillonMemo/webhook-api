@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Interval } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import got from 'got/dist/source';
 import { removeTag } from 'src/common/common.constant';
 import {
@@ -41,8 +41,6 @@ export class SearchService {
           })),
         };
 
-        console.log('result', args);
-
         const incomingUrl =
           'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
 
@@ -73,7 +71,7 @@ export class SearchService {
     }
   }
 
-  @Interval(60000)
+  @Cron('0 0 10 * * 1-5')
   async getNews(): Promise<CoreOutput> {
     try {
       if (process.env.NODE_ENV === 'prod') {
