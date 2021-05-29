@@ -28,7 +28,7 @@ export class SearchService {
         throw new Error(errorMessage);
       }
     } catch (error) {
-      return error;
+      return console.error(error);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import got from 'got/dist/source';
 import { SearchService } from './search.service';
 
@@ -12,9 +12,11 @@ export class SearchController {
   }
 
   @Post()
-  async getSearch(event: any): Promise<{ isTest: boolean; message?: string }> {
+  async getSearch(
+    @Body() postData: any,
+  ): Promise<{ isTest: boolean; message?: string }> {
     try {
-      console.log('postData:', event);
+      console.log('postData:', postData);
 
       const incoming_url =
         'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
