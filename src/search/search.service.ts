@@ -17,9 +17,9 @@ export class SearchService {
   async getSearch({ data }: CoreInput): Promise<CoreOutput> {
     try {
       if (data) {
-        const outgoing_url = `https://openapi.naver.com/v1/search/blog?query=${data}`;
+        const apiUrl = `https://openapi.naver.com/v1/search/blog?query=${data}`;
 
-        const searchResponse = await got.get<string>(outgoing_url, {
+        const searchResponse = await got.get<string>(apiUrl, {
           headers: {
             'X-Naver-Client-Id': this.CLIENT_ID,
             'X-Naver-Client-Secret': this.CLIENT_SECRET,
@@ -43,10 +43,10 @@ export class SearchService {
 
         console.log('result', args);
 
-        const incoming_url =
+        const incomingUrl =
           'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
 
-        const response = await got.post(incoming_url, {
+        await got.post(incomingUrl, {
           headers: {
             Accept: 'application/vnd.tosslab.jandi-v2+json',
             'Content-type': 'application/json',
@@ -54,10 +54,10 @@ export class SearchService {
           body: JSON.stringify(args),
         });
 
-        if (response.statusCode !== 200) {
-          const errorMessage = `error ${response.statusCode}`;
-          throw new Error(errorMessage);
-        }
+        // if (response.statusCode !== 200) {
+        //   const errorMessage = `error ${response.statusCode}`;
+        //   throw new Error(errorMessage);
+        // }
 
         return {
           ok: true,
@@ -107,9 +107,9 @@ export class SearchService {
           ),
         };
 
-        const incoming_url =
+        const incomingUrl =
           'https://wh.jandi.com/connect-api/webhook/20585156/b9a02a271d4be5fa7ab5d920b22c904f';
-        const response = await got.post<string>(incoming_url, {
+        const response = await got.post<string>(incomingUrl, {
           headers: {
             Accept: 'application/vnd.tosslab.jandi-v2+json',
             'Content-type': 'application/json',
