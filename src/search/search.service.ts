@@ -20,7 +20,7 @@ export class SearchService {
           },
         });
 
-        console.log('api', response);
+        console.log('api', response.body);
 
         const incoming_url =
           'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
