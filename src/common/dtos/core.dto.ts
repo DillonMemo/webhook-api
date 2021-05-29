@@ -30,3 +30,14 @@ export interface CoreOutput {
   ok: boolean;
   error?: string;
 }
+
+interface IncomingInfos {
+  title: string;
+  description: string;
+  imageUrl?: string;
+}
+export interface IncomingOutput {
+  body: string;
+  connectColor?: string;
+  connectInfo?: IncomingInfos[];
+}
