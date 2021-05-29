@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import got from 'got/dist/source';
+import { removeTag } from 'src/common/common.constant';
 import {
   CoreInput,
   CoreOutput,
@@ -35,20 +36,17 @@ export class SearchService {
 
         console.log('api', parserSearch);
 
-        // const args: IncomingOutput = {
-        //   body: `**${data}** 검색 결과를 알려드림`,
-        //   connectColor: '#2478FF',
-        //   connectInfo: parserSearch.items.slice(0, 5).map(item => ({
-        //     title: item.title,
-        //     description: item.
-        //   }))
-        // };
+        const args: IncomingOutput = {
+          body: `**${data}** 검색 결과를 알려드림`,
+          connectColor: '#2478FF',
+          connectInfo: parserSearch.items.slice(0, 5).map(item => ({
+            title: `[${removeTag(item.title)}](${item.link})`,
+            description: removeTag(item.description),
+          })),
+        };
 
         const incoming_url =
           'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
-        const args = {
-          body: "무엇이든 물어보살 ('ㅁ')b",
-        };
 
         const response = await got.post(incoming_url, {
           headers: {
@@ -105,10 +103,8 @@ export class SearchService {
           connectInfo: parserNews.items.slice(0, 5).map(
             item =>
               item.originallink && {
-                title: `[${item.title.replace(/(<([^>]+)>)/gi, '')}](${
-                  item.originallink
-                })`,
-                description: item.description,
+                title: `[${removeTag(item.title)}](${item.originallink})`,
+                description: removeTag(item.description),
               },
           ),
         };
