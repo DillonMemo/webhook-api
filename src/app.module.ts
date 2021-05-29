@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { WeatherModule } from './weather/weather.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     ScheduleModule.forRoot(),
     WeatherModule,
+    SearchModule,
   ],
   controllers: [],
   providers: [],
