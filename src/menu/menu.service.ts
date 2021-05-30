@@ -110,19 +110,20 @@ export class MenuService {
       connectInfo: [
         {
           title: '**등록**',
-          description: '/밥추가 {음식명}',
+          description: 'ex) /밥추가 {음식명}',
         },
         {
           title: '**삭제**',
-          description: '/밥삭제 {음식명}',
+          description: 'ex) /밥삭제 {음식명}',
         },
         {
           title: '**설정**',
-          description: '/밥설정         ***[주의] 밥 목록을 초기화 합니다!!***',
+          description:
+            'ex) /밥설정         ***[주의] 밥 목록을 초기화 합니다!!***',
         },
         {
           title: '**추천**',
-          description: '/밥추천',
+          description: 'ex)/밥추천',
         },
       ],
     };
@@ -152,8 +153,6 @@ export class MenuService {
     const args: IncomingInput = {
       body: ``,
     };
-    console.log('select', menus);
-    console.log('선택 정보', menus[Math.floor(Math.random() * menus.length)]);
 
     if (menus.length > 0) {
       const { writerName, name } =
@@ -171,7 +170,7 @@ export class MenuService {
 
       console.log(response.statusMessage);
     } else {
-      args.body = `추천할 메뉴가 없습니다.`;
+      args.body = `추천할 메뉴가 없습니다. \n밥을 추가해주세요.`;
 
       const response = await got.post(SELECT_MENU_INCOMING_URL, {
         headers: {
