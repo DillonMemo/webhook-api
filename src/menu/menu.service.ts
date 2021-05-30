@@ -6,7 +6,7 @@ import {
   CREATE_MENU_INCOMING_URL,
   DELETE_MENU_INCOMING_URL,
 } from 'src/common/common.constant';
-import { CoreInput } from 'src/common/dtos/core.dto';
+import { CoreInput, IncomingInput } from 'src/common/dtos/core.dto';
 import { Repository } from 'typeorm';
 import { MenuInput } from './dtos/menu.dto';
 import { Menu } from './entities/menu.entity';
@@ -41,7 +41,7 @@ export class MenuService {
         body: JSON.stringify(args),
       });
 
-      console.log(response);
+      console.log(response.statusMessage);
     } else {
       // menu 생성
       await this.menus.save(this.menus.create(result));
@@ -58,7 +58,7 @@ export class MenuService {
         body: JSON.stringify(args),
       });
 
-      console.log(response);
+      console.log(response.statusMessage);
     }
   }
 
@@ -66,7 +66,7 @@ export class MenuService {
     const menu = await this.menus.findOne({ name });
 
     if (menu) {
-      await this.menus.delete(menu);
+      await this.menus.delete({ name });
 
       const args = {
         body: `**(${menu.name})** 삭제 하였습니다.`,
@@ -80,7 +80,7 @@ export class MenuService {
         body: JSON.stringify(args),
       });
 
-      console.log(response);
+      console.log(response.statusMessage);
     } else {
       const args = {
         body: `**(${name})** 존재 하지 않습니다.`,
@@ -94,12 +94,33 @@ export class MenuService {
         body: JSON.stringify(args),
       });
 
-      console.log(response);
+      console.log(response.statusMessage);
     }
   }
 
   @Cron('0 0 11 * * *')
   async clearMenu(postData: CoreInput): Promise<void> {
-    console.log('clear', postData);
+    await this.menus.clear();
+    const args: IncomingInput = {
+      body: '**밥 설정(초기화)** 완료 되었습니다.',
+      connectColor: '#86E57F',
+      connectInfo: [
+        {
+          title: '**등록**',
+          description: '/밥추가 {음식명}',
+        },
+        {
+          title: '**삭제**',
+          description: '/밥삭제 {음식명}',
+        },
+      ],
+    };
+
+    console.log('clear (args)', args);
+
+    if (postData) {
+      console.log('clear (postData)', postData);
+    } else {
+    }
   }
 }

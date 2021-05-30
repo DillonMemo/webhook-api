@@ -36,7 +36,7 @@ interface IncomingInfos {
   description: string;
   imageUrl?: string;
 }
-export interface IncomingOutput {
+export interface IncomingInput {
   body: string;
   connectColor?: string;
   connectInfo?: IncomingInfos[];

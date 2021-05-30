@@ -6,11 +6,7 @@ import {
   removeTag,
   SEARCH_INCOMING_URL,
 } from 'src/common/common.constant';
-import {
-  CoreInput,
-  CoreOutput,
-  IncomingOutput,
-} from 'src/common/dtos/core.dto';
+import { CoreInput, CoreOutput, IncomingInput } from 'src/common/dtos/core.dto';
 import { SearchDto } from './dto/search.dto';
 
 @Injectable()
@@ -36,7 +32,7 @@ export class SearchService {
 
         const parserSearch: SearchDto = JSON.parse(searchResponse.body);
 
-        const args: IncomingOutput = {
+        const args: IncomingInput = {
           body: `**${data}** 검색 결과를 알려드림`,
           connectColor: '#86E57F',
           connectInfo: parserSearch.items.slice(0, 5).map(item => ({
@@ -94,7 +90,7 @@ export class SearchService {
 
         const parserNews: SearchDto = JSON.parse(newsResponse.body);
 
-        const args: IncomingOutput = {
+        const args: IncomingInput = {
           body: `**${
             new Date().getMonth() + 1
           }월 ${new Date().getDate()}일 오늘 이슈 알려드림**`,
