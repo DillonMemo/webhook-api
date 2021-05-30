@@ -20,4 +20,9 @@ export class MenuController {
   clearMenu(@Body() postData: CoreInput): Promise<void> {
     return this.menuServices.clearMenu(postData);
   }
+
+  @Post('/select')
+  selectMenu(): Promise<void> {
+    return this.menuServices.selectMenu();
+  }
 }

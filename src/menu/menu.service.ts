@@ -6,6 +6,7 @@ import {
   CLEAR_MENU_INCOMING_URL,
   CREATE_MENU_INCOMING_URL,
   DELETE_MENU_INCOMING_URL,
+  SELECT_MENU_INCOMING_URL,
 } from 'src/common/common.constant';
 import { CoreInput, IncomingInput } from 'src/common/dtos/core.dto';
 import { Repository } from 'typeorm';
@@ -119,6 +120,10 @@ export class MenuService {
           title: '**설정**',
           description: '/밥설정         ***[주의] 밥 목록을 초기화 합니다!!***',
         },
+        {
+          title: '**추천**',
+          description: '/밥추천',
+        },
       ],
     };
 
@@ -139,5 +144,44 @@ export class MenuService {
     });
 
     console.log(response.statusMessage);
+  }
+
+  async selectMenu(): Promise<void> {
+    const menus = await this.menus.find();
+
+    const args: IncomingInput = {
+      body: ``,
+    };
+    console.log('select', menus);
+    console.log('선택 정보', menus[Math.floor(Math.random() * menus.length)]);
+
+    if (menus.length > 0) {
+      const { writerName, name } =
+        menus[Math.floor(Math.random() * menus.length)];
+
+      args.body = `오늘의 메뉴는 **${writerName}**님이 추천하는 **${name}** 입니다.`;
+
+      const response = await got.post(SELECT_MENU_INCOMING_URL, {
+        headers: {
+          Accept: 'application/vnd.tosslab.jandi-v2+json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(args),
+      });
+
+      console.log(response.statusMessage);
+    } else {
+      args.body = `추천할 메뉴가 없습니다.`;
+
+      const response = await got.post(SELECT_MENU_INCOMING_URL, {
+        headers: {
+          Accept: 'application/vnd.tosslab.jandi-v2+json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(args),
+      });
+
+      console.log(response.statusMessage);
+    }
   }
 }
