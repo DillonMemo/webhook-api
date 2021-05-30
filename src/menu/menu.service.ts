@@ -47,24 +47,22 @@ export class MenuService {
       name,
       writerName,
     };
-    console.log('result', result);
 
     const menu = await this.menus.findOne({ name });
-    const test = await this.menus.find();
-    console.log('menu', menu);
-    console.log('test', test);
 
     if (menu) {
       const args = {
         body: `**${menu.writerName}**님이 **(${menu.name})** 이미 추가 하였습니다.`,
       };
-      await got.post(CREATE_MENU_INCOMING_URL, {
+      const response = await got.post(CREATE_MENU_INCOMING_URL, {
         headers: {
           Accept: 'application/vnd.tosslab.jandi-v2+json',
           'Content-type': 'application/json',
         },
         body: JSON.stringify(args),
       });
+
+      console.log(response);
     } else {
       // menu 생성
       await this.menus.save(this.menus.create(result));
@@ -73,13 +71,15 @@ export class MenuService {
         body: `**(${name})** 추가 하였습니다`,
       };
 
-      await got.post(CREATE_MENU_INCOMING_URL, {
+      const response = await got.post(CREATE_MENU_INCOMING_URL, {
         headers: {
           Accept: 'application/vnd.tosslab.jandi-v2+json',
           'Content-type': 'application/json',
         },
         body: JSON.stringify(args),
       });
+
+      console.log(response);
     }
   }
 }
