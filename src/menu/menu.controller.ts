@@ -13,6 +13,7 @@ export class MenuController {
 
   @Post('/create')
   createMenu(@Body() postData: CoreInput): Promise<void> {
+    console.log('postData', postData);
     return this.menuServices.createMenu(postData);
   }
 

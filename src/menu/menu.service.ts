@@ -47,8 +47,12 @@ export class MenuService {
       name,
       writerName,
     };
+    console.log('result', result);
 
     const menu = await this.menus.findOne({ name });
+    const test = await this.menus.find();
+    console.log('menu', menu);
+    console.log('test', test);
 
     if (menu) {
       const args = {
