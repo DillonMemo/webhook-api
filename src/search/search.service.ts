@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import got from 'got/dist/source';
-import { removeTag } from 'src/common/common.constant';
+import {
+  NEWS_INCOMING_URL,
+  removeTag,
+  SEARCH_INCOMING_URL,
+} from 'src/common/common.constant';
 import {
   CoreInput,
   CoreOutput,
@@ -41,8 +45,7 @@ export class SearchService {
           })),
         };
 
-        const incomingUrl =
-          'https://wh.jandi.com/connect-api/webhook/20585156/f1467d35d19c3f901491ac4184ec4d15';
+        const incomingUrl = SEARCH_INCOMING_URL;
 
         await got.post(incomingUrl, {
           headers: {
@@ -105,8 +108,7 @@ export class SearchService {
           ),
         };
 
-        const incomingUrl =
-          'https://wh.jandi.com/connect-api/webhook/20585156/b9a02a271d4be5fa7ab5d920b22c904f';
+        const incomingUrl = NEWS_INCOMING_URL;
         const response = await got.post<string>(incomingUrl, {
           headers: {
             Accept: 'application/vnd.tosslab.jandi-v2+json',

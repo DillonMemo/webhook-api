@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { WeatherModule } from './weather/weather.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { SearchModule } from './search/search.module';
+import { MenuModule } from './menu/menu.module';
+import { Menu } from './menu/entities/menu.entity';
 
 @Module({
   imports: [
@@ -32,11 +34,12 @@ import { SearchModule } from './search/search.module';
       synchronize: process.env.NODE_ENV !== 'prod',
       logging:
         process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
-      entities: [],
+      entities: [Menu],
     }),
     ScheduleModule.forRoot(),
     WeatherModule,
     SearchModule,
+    MenuModule,
   ],
   controllers: [],
   providers: [],
