@@ -8,6 +8,8 @@ import { SearchModule } from './search/search.module';
 import { MenuModule } from './menu/menu.module';
 import { Menu } from './menu/entities/menu.entity';
 
+console.log('NODE_ENV', process.env.NODE_ENV);
+
 @Module({
   imports: [
     ConfigModule.forRoot({
