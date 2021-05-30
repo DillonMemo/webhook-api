@@ -34,8 +34,7 @@ console.log('NODE_ENV', process.env.NODE_ENV);
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
-      logging:
-        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+      logging: true, // process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
       entities: [Menu],
     }),
     ScheduleModule.forRoot(),
