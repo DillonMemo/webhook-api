@@ -43,43 +43,39 @@ export class MenuService {
   }
 
   async createMenu({ data: name, writerName }: CoreInput): Promise<void> {
-    try {
-      const result: MenuInput = {
-        name,
-        writerName,
+    const result: MenuInput = {
+      name,
+      writerName,
+    };
+
+    const menu = await this.menus.findOne({ name });
+
+    if (menu) {
+      const args = {
+        body: `**${menu.writerName}**님이 **(${menu.name})** 이미 추가 하였습니다.`,
+      };
+      await got.post(CREATE_MENU_INCOMING_URL, {
+        headers: {
+          Accept: 'application/vnd.tosslab.jandi-v2+json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(args),
+      });
+    } else {
+      // menu 생성
+      await this.menus.save(this.menus.create(result));
+
+      const args = {
+        body: `**(${name})** 추가 하였습니다`,
       };
 
-      const menu = await this.menus.findOne({ name });
-
-      if (menu) {
-        const args = {
-          body: `**${menu.writerName}**님이 **(${menu.name})** 이미 추가 하였습니다.`,
-        };
-        await got.post(CREATE_MENU_INCOMING_URL, {
-          headers: {
-            Accept: 'application/vnd.tosslab.jandi-v2+json',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(args),
-        });
-      } else {
-        // menu 생성
-        await this.menus.save(this.menus.create(result));
-
-        const args = {
-          body: `**(${name})** 추가 하였습니다`,
-        };
-
-        await got.post(CREATE_MENU_INCOMING_URL, {
-          headers: {
-            Accept: 'application/vnd.tosslab.jandi-v2+json',
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(args),
-        });
-      }
-    } catch (error) {
-      console.error(error);
+      await got.post(CREATE_MENU_INCOMING_URL, {
+        headers: {
+          Accept: 'application/vnd.tosslab.jandi-v2+json',
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(args),
+      });
     }
   }
 }
