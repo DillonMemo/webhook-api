@@ -70,7 +70,7 @@ export class SearchService {
     }
   }
 
-  @Cron('0 0 10 * * 1-5')
+  @Cron('0 0 2 * * 1-5') // 서버의 timezone('asia/seoul')이지만 시간을 -9 하여 계산
   async getNews(): Promise<CoreOutput> {
     try {
       if (process.env.NODE_ENV === 'prod') {

@@ -100,7 +100,7 @@ export class MenuService {
     }
   }
 
-  @Cron('0 0 11 * * *')
+  @Cron('0 0 2 * * *') // 서버의 timezone('asia/seoul')이지만 시간을 -9 하여 계산
   async clearMenu(postData: CoreInput): Promise<void> {
     await this.menus.clear();
 
